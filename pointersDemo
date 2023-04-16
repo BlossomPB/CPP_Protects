@@ -35,13 +35,14 @@ int main() {
 	generateSeedRoot(ptrSeedRoot);
 
 	// Start of UX
-	cout << "***************************************\n\n";
-	cout << "Would you like to help make the seed? (y/n): ";
+	cout << "\n\n\n\n\n\n\n";
+	cout << "            |******************************************************************************|\n\n";
+	cout << "                             Would you like to help make the seed? (y/n): ";
 	cin >> answer; // Answer to check later
 
 	// Runs if "answer" was a "y/Y"
 	if (answer == "y" || answer == "Y"){
-		cout << "\n\nPlease enter any number: "; 
+		cout << "\n\n                                      Please enter any number:  "; 
 		cin >> inputNum; // Number can be anything 
 		generateSeedWithInput(ptrRandNumOf100, ptrSeedRoot, ptrSeed, inputNum); // Runs function to generate final seed
 	} else if (answer == "n" || answer == "N") {
@@ -50,8 +51,8 @@ int main() {
 		generateSeedNoInput(ptrRandNumOf100, ptrSeedRoot, ptrSeed); // Runs if a non answer is shown up and is here to prevent errors
 	}
 
-	cout << "\n\nHere is your generated number seed:  " << *ptrSeed << "\n\n"; // Displays the final seed for the the player
-	cout << "***************************************\n\n";
+	cout << "\n\n                             Here is your generated number seed:  " << *ptrSeed << "\n\n"; // Displays the final seed for the the player
+	cout << "            |******************************************************************************|\n\n\n\n\n\n\n\n\n\n\n\n";
 	return 0;
 }
 
