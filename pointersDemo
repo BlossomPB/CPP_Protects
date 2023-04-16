@@ -1,27 +1,80 @@
 // Isaac Nevarez
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-// Initialize function
-int getRandomNum(int theRandNum);
+// Initialize function headers
+void getRandomNum(int Num, int* Num2);
+void generateSeedRoot(int* Num);
+void generateSeedWithInput(int* Num, int* SeedRoot, int* Seed, int inputedValue);
+void generateSeedNoInput(int* Num, int* SeedRoot, int* Seed);
 
 
 int main() {
-	srand(time(0));
-	int randomNum = rand();
-	int randNumOf100;
-	int* randNumOf100Ptr;
+	srand(time(0)); // Get time seed 
 
-	randNumOf100 = getRandomNum(randomNum);
+	int randNum = rand(); // Makes first random number
+	int randNumOf100; // Variable for 1-100 range 
+	int* ptrRandNumOf100 = &randNumOf100; // Pointer for variable randNumOf100
+
+	// Creates seedRoot variable and pointer
+	int seedRoot;
+	int* ptrSeedRoot = &seedRoot;
+	int seed; // The outputed seed
+	int* ptrSeed = &seed;
+
+	// User seed
+	int inputNum; // This veriable is used if user says yes to help make the seed
+	string answer; // answer var
+
+
+	// Runs functions with parameters
+	getRandomNum(randNum, ptrRandNumOf100);
+	generateSeedRoot(ptrSeedRoot);
+
+	// Start of UX
 	cout << "***************************************\n\n";
-	cout << "The random number is: " << randNumOf100 << "\n\n";
+	cout << "Would you like to help make the seed? (y/n): ";
+	cin >> answer; // Answer to check later
+
+	// Runs if "answer" was a "y/Y"
+	if (answer == "y" || answer == "Y"){
+		cout << "\n\nPlease enter any number: "; 
+		cin >> inputNum; // Number can be anything 
+		generateSeedWithInput(ptrRandNumOf100, ptrSeedRoot, ptrSeed, inputNum); // Runs function to generate final seed
+	} else if (answer == "n" || answer == "N") {
+		generateSeedNoInput(ptrRandNumOf100, ptrSeedRoot, ptrSeed); // Runs if the player doesn't want to help make the seed
+	} else {
+		generateSeedNoInput(ptrRandNumOf100, ptrSeedRoot, ptrSeed); // Runs if a non answer is shown up and is here to prevent errors
+	}
+
+	cout << "\n\nHere is your generated number seed:  " << *ptrSeed << "\n\n"; // Displays the final seed for the the player
 	cout << "***************************************\n\n";
+	return 0;
 }
 
-int getRandomNum(int theRandNum) {
-	int randomNumOf100Ptr = (theRandNum % 100) + 1;
+//\\//\\  Function Definitions //\\//\\
 
-	return randomNumOf100Ptr;
+
+// Gets the first random number
+void getRandomNum(int Num, int *Num2){ 
+	*Num2 = (Num % 100) + 1;
+}
+
+// Gets second smaller number to do math later 
+void generateSeedRoot(int *Num){
+	*Num = rand();
+}
+
+// Plays when player wants to help make the seed and makes the final seed to display
+void generateSeedWithInput(int* Num, int* SeedRoot, int* Seed, int inputedValue){
+	int math1 = (inputedValue % 1000) + 106;
+	*Seed = (*Num) * (*SeedRoot) * (math1) * 173;
+}
+
+// Plays when player doesn't want to help make the seed and makes the final seed to display
+void generateSeedNoInput(int* Num, int* SeedRoot, int* Seed) {
+	*Seed = (*Num) * (*SeedRoot) * 173;
 }
