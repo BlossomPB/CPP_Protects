@@ -1,0 +1,27 @@
+// Isaac Nevarez
+
+#include <iostream>
+
+using namespace std;
+
+// Initialize function
+int getRandomNum(int theRandNum);
+
+
+int main() {
+	srand(time(0));
+	int randomNum = rand();
+	int randNumOf100;
+	int* randNumOf100Ptr;
+
+	randNumOf100 = getRandomNum(randomNum);
+	cout << "***************************************\n\n";
+	cout << "The random number is: " << randNumOf100 << "\n\n";
+	cout << "***************************************\n\n";
+}
+
+int getRandomNum(int theRandNum) {
+	int randomNumOf100Ptr = (theRandNum % 100) + 1;
+
+	return randomNumOf100Ptr;
+}
