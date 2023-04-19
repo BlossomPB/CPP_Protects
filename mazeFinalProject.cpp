@@ -7,20 +7,32 @@
 using namespace std;
 
 int main() {
+    // Old Vars
     bool foundCrystal;
     string username;
     introWords();
-    cin >> username;
-    string direction;
-    string nextPos;
-    string currentPos;
-    int testCurrPos;
-    int testNextPos;
+    cout << "\n\n\n\n\n\n";
+    int nextPos;
     string error1LastPos;
     bool startedGame;
     foundCrystal = false;
     startedGame = false;
-    currentPos = "position1";
+
+    // New Vars
+    srand(time(0));
+    int num = rand();
+    int randNum = (num % 3) + 1;
+
+    // Pointer Vars
+    int currentPos;
+    int* currPosPtr = &currentPos;
+
+    string direction;
+    string* directionPtr = &direction;
+
+    bool directionValid;
+    bool* dirValPtr = &directionValid;
+    
 
     // Makes position 1
     positionMaker position1;
@@ -35,74 +47,81 @@ int main() {
     position1.westPos = "position6";
     position1.hasCrystal = false;
 
-    cout << "\n\nInput Direction (north, east, west): ";
-    cin >> direction;
-    cout << "\n\n\n\n";
-    currentPos = doPos1(currentPos, direction);
+    /*
+        Maze Number Array Legend:
+        0 = Free Space
+        1 = Wall
+        2 = Start Point
+        3 = Intercection
+        4 = End Point
+        5 = Crystal
         
 
+        Default 12 x 12 Multi Array:
 
-    do {
-        if (startedGame == false) {
-            cout << "You are at the first turn you have 3 choices (North, East, West): "; // Starts the game
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+    */
 
-            cin >> direction;
-            currentPos = pos1(direction);
-            cout << "\n\nThis is now your Current Position: " << currentPos;
-            startedGame = true;
-            error1LastPos = "pos1";
-        }
-        if (currentPos == "pos1") {
-            cout << "\nInsert your next movement.. your choices are (North, East, West): ";
-            cin >> direction;
-            currentPos = pos1(direction);
-            error1LastPos = "pos1";
-        }
-        else if (currentPos == "pos2") {
-            cout << "\nInsert your next movement.. your choices are (East, South, West): ";
-            cin >> direction;
-            currentPos = pos2(direction);
-            error1LastPos = "pos2";
-        }
-        else if (currentPos == "pos3") {
-            cout << "\nInsert your next movement.. your choices are (North, South, West): ";
-            cin >> direction;
-            currentPos = pos3(direction);
-            error1LastPos = "pos3";
-        }
-        else if (currentPos == "pos4") {
-            cout << "\nInsert your next movement.. your choices are (North, East, South, West): ";
-            cin >> direction;
-            currentPos = pos4(direction);
-            error1LastPos = "pos4";
-        }
-        else if (currentPos == "pos5") {
-            cout << "\nInsert your next movement.. your choices are (East, South, West): ";
-            cin >> direction;
-            currentPos = pos5(direction);
-            error1LastPos = "pos5";
-        }
-        if (currentPos == "end") {
-            break;
-        }
-        else if (currentPos == "pos1" || currentPos == "pos2" || currentPos == "pos3" || currentPos == "pos4" || currentPos == "pos5") {
-            cout << "\n\nThis is now your Current Position: " << currentPos;
-        }
-        else {
-            cout << "\nErrorCode: 1 [Please Input Correct Value]";
-            cout << "\nGoing back to last position\n";
-            currentPos = error1LastPos;
-        }
+    // Default Maze Starting
+    int mazePositions[12][12] = {
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+        { 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+    };
 
-    } while (currentPos != "end");
-    if (currentPos == "end" && foundCrystal == true) {
-        cout << "\n\nYou reached the end, and you found the secret crystal!";
-        cout << "\nCongrats " << username << " for completing the game!";
+    int wieghtRand;
+    int* wieghtRandPtr = &wieghtRand;
+
+    
+
+    for (int r = 0; r < 12; r++) {
+        for (int c = 0; c < 12; c++) {
+            if (mazePositions[r][c] == 1 || mazePositions[r][c] == 2) {
+                
+            }
+            else {
+                randSpace(wieghtRandPtr);
+                cout << *wieghtRandPtr;
+                mazePositions[r][c] = *wieghtRandPtr;
+            }
+        }
+    }
+
+    cout << "\n\n\n\n\n\n";
+
+    // Prints made maze
+    for (int r = 0; r < 12; r++) {
+        for (int c = 0; c < 12; c++) {
+            cout << mazePositions[r][c] << " ";
+
+        }
+        cout << "\n";
 
     }
-    else if (currentPos == "end" && foundCrystal == false)
-        cout << "\n\nYou reached the end congrats " << username << ", but there are more secrets to find!";
 
-    cout << "\n\n\n\n";
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    // startMaze(currPosPtr,directionPtr,dirValPtr);
+
+
     return 0;
 }
