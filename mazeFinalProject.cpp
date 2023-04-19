@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <string>
-#include "mazePostions.h"
+#include "mazePositions.h"
 
 using namespace std;
 
@@ -20,18 +20,27 @@ int main() {
     bool startedGame;
     foundCrystal = false;
     startedGame = false;
+    currentPos = "position1";
 
+    // Makes position 1
     positionMaker position1;
     position1.posNumber = 1;
     position1.north = true;
+    position1.northPos = "position4";
     position1.east = true;
+    position1.eastPos = "position2";
     position1.south = false;
+    position1.southPos = "nil";
     position1.west = true;
+    position1.westPos = "position6";
     position1.hasCrystal = false;
 
-    posInfo sumthin;
+    cout << "\n\nInput Direction (north, east, west): ";
+    cin >> direction;
+    cout << "\n\n\n\n";
+    currentPos = doPos1(currentPos, direction);
+        
 
-    
 
     do {
         if (startedGame == false) {
