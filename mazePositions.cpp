@@ -11,133 +11,68 @@
 
 using namespace std;
 
+// Vars
+bool foundCrystal;
+int dirNum;
+
 void introWords() {
     cout << "Welcome to the maze game";
     cout << "\nPlease enter you name: ";
 }
 
 
-enum class cardnalDirection {
-        north,
-        North,
-        east,
-        East,
-        south,
-        South,
-        west,
-        West
-};
+void randSpace(int* randSpace) {
+    int temp;
+    int num = rand();
+    temp = (num % 100) + 1;
+    cout << "  " << temp << "  ";
+    if ( temp <= 3 ) {          // Crystal Chance (3%)
+        *randSpace = 5;
+    }
+    else if ( temp < 56 ) { // Free Space Chance (51%)
+        *randSpace = 0;
+    }
+    else if ( temp >= 56 ) {    // Wall Change (46%)
+        *randSpace = 1;
+    }
+}
 
+void startMaze(int* currPosptr, string* directionPtr,bool* dirValPtr) {
+    validateDirection(directionPtr, dirValPtr);
+    if (*dirValPtr == true) {
+        
+    } else {
+        cout << "An Error Occured";
+    }
+}
 
-// Vars
-bool foundCrystal;
-bool directionValid;
-string newStructVar;
-
-string doPos1(string currPos, cardnalDirection dir) {
-   // string loweredDirec = direction;
-    ///cardnal calledDri; 
-    
-    switch (dir) {
-    case cardnalDirection::East:
-
+void validateDirection(string* directionPtr, bool* dirValPtr) {
+    if (*directionPtr == "north" || *directionPtr == "North") {
+        dirNum = 1;
+    } else if (*directionPtr == "east" || *directionPtr == "East") {
+        dirNum = 2;
+    } else if (*directionPtr == "south" || *directionPtr == "South") {
+        dirNum = 3;
+    } else if (*directionPtr == "west" || *directionPtr == "West") {
+        dirNum = 4;
+    } else {
+        dirNum = 5;
+    }
+    switch (dirNum) {
+    case 1:
+        *dirValPtr = true;
         break;
-    
+    case 2:
+        *dirValPtr = true;
+        break;
+    case 3:
+        *dirValPtr = true;
+        break;
+    case 4:
+        *dirValPtr = true;
+        break;
     default:
+        *dirValPtr = false;
         break;
     }
-
-    if (dir == cardnal::East)
-        directionValid = true;
-    }
-    else {
-        directionValid = false;
-    }
-
-    if (directionValid == true) {
-        newStructVar = loweredDirec + "Pos";
-        return currPos.newStructVar;
-    }
-}
-
-string pos1(string direction) {
-    string nextPos;
-    if (direction == "North") {
-        nextPos = "pos2";
-    }
-    else if (direction == "East") {
-        nextPos = "pos3";
-    }
-    else if (direction == "West") {
-        nextPos = "pos4";
-    }
-    else {
-        nextPos = "pos1";
-    }
-    return nextPos;
-}
-
-
-
-string pos2(string direction) {
-    string nextPos;
-    if (direction == "East") {
-        nextPos = "pos3";
-    }
-    else if (direction == "South") {
-        nextPos = "pos1";
-    }
-    else if (direction == "West") {
-        nextPos = "pos5";
-    }
-    return nextPos;
-}
-
-string pos3(string direction) {
-    string nextPos;
-    if (direction == "North") {
-        nextPos = "pos2";
-    }
-    else if (direction == "South") {
-        cout << "\nYou found a Secret Crystal!";
-        foundCrystal = true;
-        nextPos = "pos3";
-    }
-    else if (direction == "West") {
-        nextPos = "pos1";
-    }
-    return nextPos;
-}
-
-string pos4(string direction) {
-    string nextPos;
-    if (direction == "North") {
-        nextPos = "pos5";
-    }
-    else if (direction == "East") {
-        nextPos = "pos1";
-    }
-    else if (direction == "South") {
-        cout << "You reached a Dead End!";
-        nextPos = "pos4";
-    }
-    else if (direction == "West") {
-        cout << "You reached a Dead End!";
-        nextPos = "pos4";
-    }
-    return nextPos;
-}
-
-string pos5(string direction) {
-    string nextPos;
-    if (direction == "East") {
-        nextPos = "pos2";
-    }
-    else if (direction == "South") {
-        nextPos = "pos4";
-    }
-    else if (direction == "West") {
-        nextPos = "end";
-    }
-    return nextPos;
 }
