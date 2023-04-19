@@ -1,32 +1,13 @@
 /*
-	Isaac Nevarez
-	Add-on Source File
-	for maze position definitions
-
-
-    string pos1(string direction) {
-    string nextPos;
-    if (direction == "North") {
-        nextPos = "pos2";
-    }
-    else if (direction == "East") {
-        nextPos = "pos3";
-    }
-    else if (direction == "West") {
-        nextPos = "pos4";
-    }
-    else {
-        nextPos = "pos1";
-    }
-    return nextPos;
-}
-
+    Isaac Nevarez
+    Add-on Source File
+    for maze position definitions
 
 */
 
 #include <iostream>
 #include <string>
-#include "mazePostions.h"
+#include "mazePositions.h"
 
 using namespace std;
 
@@ -36,10 +17,48 @@ void introWords() {
 }
 
 
-// Var (easter egg condition)
+enum class cardnalDirection {
+        north,
+        North,
+        east,
+        East,
+        south,
+        South,
+        west,
+        West
+};
+
+
+// Vars
 bool foundCrystal;
+bool directionValid;
+string newStructVar;
 
+string doPos1(string currPos, cardnalDirection dir) {
+   // string loweredDirec = direction;
+    ///cardnal calledDri; 
+    
+    switch (dir) {
+    case cardnalDirection::East:
 
+        break;
+    
+    default:
+        break;
+    }
+
+    if (dir == cardnal::East)
+        directionValid = true;
+    }
+    else {
+        directionValid = false;
+    }
+
+    if (directionValid == true) {
+        newStructVar = loweredDirec + "Pos";
+        return currPos.newStructVar;
+    }
+}
 
 string pos1(string direction) {
     string nextPos;
