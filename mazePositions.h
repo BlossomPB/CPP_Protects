@@ -30,9 +30,7 @@ public:
     string figureNextPos(string posNumber, string nextDirection);
 };
 
-string doPos1(string currPos, string direction);
-string pos1(string direction);
-string pos2(string direction);
-string pos3(string direction);
-string pos4(string direction);
-string pos5(string direction);
+
+void randSpace(int* randSpace);
+void startMaze(int* currPosptr,string* directionPtr,bool* dirValPtr);
+void validateDirection(string* directionPtr, bool* dirValPtr);
