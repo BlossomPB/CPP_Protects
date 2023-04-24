@@ -2,9 +2,12 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "mazePositions.h"
 
 using namespace std;
+
+
 
 int main() {
     // Old Vars
@@ -22,6 +25,8 @@ int main() {
     srand(time(0));
     int num = rand();
     int randNum = (num % 3) + 1;
+    string mazeString;
+    string* mazeStringPtr = &mazeString;
 
     // Pointer Vars
     int currentPos;
@@ -30,94 +35,33 @@ int main() {
     string direction;
     string* directionPtr = &direction;
 
-    bool directionValid;
-    bool* dirValPtr = &directionValid;
+ 
+    // Creates first layer
+    createFirstLayer();
+
+    // Organizes first layer
+    organizeFirstLayer();
     
+    // Generate Rest of maze
+    generateRestOfMaze();
 
-    // Makes position 1
-    positionMaker position1;
-    position1.posNumber = 1;
-    position1.north = true;
-    position1.northPos = "position4";
-    position1.east = true;
-    position1.eastPos = "position2";
-    position1.south = false;
-    position1.southPos = "nil";
-    position1.west = true;
-    position1.westPos = "position6";
-    position1.hasCrystal = false;
+    // Organizes intersections inside the maze
+    organizeIntersections();
 
-    /*
-        Maze Number Array Legend:
-        0 = Free Space
-        1 = Wall
-        2 = Start Point
-        3 = Intercection
-        4 = End Point
-        5 = Crystal
-        
+    // Sets Start and end positions and saves positions for later use
+    setStartandEnd();
 
-        Default 12 x 12 Multi Array:
+    // Creates intersection points in maze
+    createInterectionPoints();
 
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-    */
-
-    // Default Maze Starting
-    int mazePositions[12][12] = {
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-        { 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-    };
-
-    int wieghtRand;
-    int* wieghtRandPtr = &wieghtRand;
-
-    
-
-    for (int r = 0; r < 12; r++) {
-        for (int c = 0; c < 12; c++) {
-            if (mazePositions[r][c] == 1 || mazePositions[r][c] == 2) {
-                
-            }
-            else {
-                randSpace(wieghtRandPtr);
-                cout << *wieghtRandPtr;
-                mazePositions[r][c] = *wieghtRandPtr;
-            }
-        }
-    }
+    // Creates a crystal in the maze for a easter egg
+    setCrystal();
 
     cout << "\n\n\n\n\n\n";
 
     // Prints made maze
-    for (int r = 0; r < 12; r++) {
-        for (int c = 0; c < 12; c++) {
-            cout << mazePositions[r][c] << " ";
-
-        }
-        cout << "\n";
-
-    }
+    printMaze();
+    
 
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
     // startMaze(currPosPtr,directionPtr,dirValPtr);
