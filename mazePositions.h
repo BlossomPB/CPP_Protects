@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void introWords();
+void introWords(string* usernamePtr);
 
 
 struct positionMaker {
@@ -26,7 +26,7 @@ struct positionMaker {
 
 
 
-//\\// maze generation functions //\\//
+//\\// Maze Generation Functions //\\//
 
 // First layer maker functions
     void createFirstLayer();
@@ -34,12 +34,14 @@ struct positionMaker {
 
 // RNG for Maze Maker functions
     void randSpace();
-    void randNumOfRow();
+    void randNumOfMazeLengths();
+    void randPathFrequency();
     void oneOrZeroFunc();
     void oneToThreeFunc();
-    void oneToFourFunc();
+    void oneToFiveFunc();
 
 // Maze Maker function helpers
+    void make4Way(int r, int c);
     void makeCorner(int r, int c);
     void makeLeft(int r, int c);
     void makeRight(int r, int c);
@@ -53,15 +55,29 @@ struct positionMaker {
 
 // Maze Generator functions
     void generateRestOfMaze();
+    void regenMaze();
+    void organizeMaze();
     void createInterectionPoints();
     void organizeIntersections();
     void setStartandEnd();
     void setCrystal();
+    void checkMaze();
 
 //   END   \\// *** //\\   END   //
+
 
 // Print maze function
     void printMaze();
 
-void startMaze(int* currPosptr,string* directionPtr,bool* dirValPtr);
-void validateDirection(string* directionPtr, bool* dirValPtr);
+
+
+//\\// Maze Wonder Functions //\\// // Functions not in use for final project
+    
+// Maze Wonder Functions
+    void startMaze();
+
+// Maze Wonder Help Functions
+    void findIntersection();
+    void validateDirection(string* directionPtr, bool* dirValPtr);
+    
+//   END   \\// *** //\\   END   //
